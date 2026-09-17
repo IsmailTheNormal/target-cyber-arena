@@ -3,29 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Target Cyber Arena — Bug Hunt Challenge</title>
+  <title>Target Cyber Arena — Bug Hunt Challenge 🏆</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dark-theme">
+
+  <!-- BACKGROUND CYBER GRID -->
+  <div class="cyber-grid-bg"></div>
 
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="logo">
-      <span class="logo-icon">⚡</span>
-      <span class="logo-text">TARGET // CYBER ARENA</span>
+      <span class="logo-pulse">⚡</span>
+      <div class="logo-text-group">
+        <span class="logo-brand">TARGET</span>
+        <span class="logo-sub">CYBER ARENA // 2026</span>
+      </div>
     </div>
+
     <nav class="nav-links">
       <a href="#hero" class="nav-item" data-ru="Главная" data-en="Home">Bosh sahifa</a>
       <a href="#store" class="nav-item" data-ru="Кибер-Магазин" data-en="Cyber Store">Kiber Do'kon</a>
-      <!-- BUG 1: Misaligned navbar link with margin-top: 45px -->
-      <a href="#stats" class="nav-item broken-link" data-ru="Рейтинг" data-en="Leaderboard">Reyting</a>
-      <!-- BUG 6: ID in HTML is sound-btn, but JS looks for audio-toggle -->
-      <button id="sound-btn" class="btn-action" data-ru="🔊 Звук FX" data-en="🔊 Audio FX">🔊 Ovoz FX</button>
-      <button id="theme-btn" class="btn-action" data-ru="🌙 Тема" data-en="🌙 Theme">🌙 Rejim</button>
-      <!-- LANGUAGE SWITCHER -->
+      
+      <!-- BUG 1 (UI Flaw): Misaligned navbar link drooping down by 55px -->
+      <a href="#stats" class="nav-item broken-link" data-ru="🏆 Рейтинг" data-en="🏆 Leaderboard">🏆 Reyting</a>
+      
+      <!-- BUG 6 (JS Event Error): ID in HTML is sound-btn, but JS looks for audio-toggle -->
+      <button id="sound-btn" class="btn-cyber" data-ru="🔊 Звук FX" data-en="🔊 Audio FX">🔊 Ovoz FX</button>
+      <button id="theme-btn" class="btn-cyber" data-ru="☀️ Тема" data-en="☀️ Theme">☀️ Yorug'</button>
+
+      <!-- LANGUAGE SELECTOR -->
       <div class="lang-picker">
         <button class="btn-lang is-active" id="btn-uz" onclick="setArenaLang('uz')">UZ</button>
         <button class="btn-lang" id="btn-ru" onclick="setArenaLang('ru')">RU</button>
@@ -34,85 +44,152 @@
     </nav>
   </header>
 
-  <!-- HERO SECTION -->
+  <!-- MAIN ARENA CONTAINER -->
   <main class="container">
+
+    <!-- HERO / REACTOR SECTION -->
     <section id="hero" class="hero-section">
-      <!-- BUG 2: hero-badge has negative margin-bottom: -50px and covers the mine button below it -->
-      <div class="hero-badge">
-        <span data-ru="🏆 Кибер-Турнир 2026 // Детективы 9-го Класса" data-en="🏆 Cyber Tournament 2026 // Grade 9 Detectives">🏆 Kiber-Turnir 2026 // 9-Sinf Detektivlari</span>
+      <div class="hud-corner hud-tl"></div>
+      <div class="hud-corner hud-tr"></div>
+      <div class="hud-corner hud-bl"></div>
+      <div class="hud-corner hud-br"></div>
+
+      <div class="mission-tag">
+        <span class="status-dot"></span>
+        <span data-ru="СИСТЕМА: РЕЖИМ БАГ-ХАНТИНГА АКТИВЕН" data-en="SYSTEM: BUG HUNT PROTOCOL ONLINE">TIZIM: KIBER-DETEKTIV TURNIRI FAOLLASHDI</span>
       </div>
 
-      <h1 class="hero-title" data-ru="АКТИВИРУЙ ЭНЕРГОПЛАСТИКУ И ПОБЕЙ РЕКОРД!" data-en="ACTIVATE ENERGO-PLASTICS & SMASH THE RECORD!">ENERGOPLASTIKANI FAOL QIL VA REKORDNI YANGILA!</h1>
-      <p class="hero-desc" data-ru="Нажимай на Кибер-Реактор, накапливай энергию, приобретай редкие артефакты и найди все скрытые ошибки с помощью AI-Агента!" data-en="Click the Cyber Reactor to harvest energy, acquire rare artifacts, and hunt down all hidden defects using your AI Agent!">
-        Kiber-Reaktorni bosib energiya to'pla, yangi artifaktlarni xarid qil va barcha 
-        koddagi yashirin xatoliklarni AI Agenti yordamida fosh et!
+      <h1 class="hero-title">
+        <span data-ru="АКТИВИРУЙ КИБЕР-РЕАКТОР" data-en="ACTIVATE THE CYBER REACTOR">KIBER-REAKTORNI FAOL QIL</span><br>
+        <span class="gradient-text" data-ru="И УСТРАНИ ВСЕ СИСТЕМНЫЕ СБОИ!" data-en="& ELIMINATE ALL SYSTEM BUGS!">VA BARCHA XATOLIKLARNI FOSH ET!</span>
+      </h1>
+
+      <p class="hero-desc" data-ru="Нажимай на реактор, накапливай энергию (EP), открывай редкие артефакты и с помощью AI-Агента устраняй скрытые баги в коде!" data-en="Harvest energy (EP) from the reactor, unlock rare cyber artifacts, and command your AI Agent to fix planted defects in the codebase!">
+        Reaktordan energiya (EP) ishlab chiqar, qurollarni xarid qil va 
+        saytdagi yashirin xatoliklarni AI Agenti bilan jarrohlik aniqligida tuzat!
       </p>
 
-      <!-- Clicker Button -->
-      <div class="reactor-container">
-        <!-- BUG 5: Mining button triggers logic error in script.js (NaN due to undefined clickBonus) -->
-        <button id="mine-btn" class="btn-reactor">
-          <span class="reactor-core">⚡</span>
-          <span class="reactor-label" data-ru="СБОР ЭНЕРГИИ (+10)" data-en="HARVEST ENERGY (+10)">ENERGIYA TO'PLASH (+10)</span>
-        </button>
+      <!-- REACTOR WORKSPACE WITH BUG 2 (Overlap Flaw) -->
+      <div class="reactor-workspace">
+        
+        <!-- BUG 2 (UI Overlap): Badge has negative margin-bottom: -55px and high z-index,
+             physically covering the top half of the reactor button, blocking clicks! -->
+        <div class="hero-badge overlap-flaw">
+          <span class="badge-icon">🛡️</span>
+          <span class="badge-text" data-ru="СИСТЕМА ЗАЩИТЫ (ПЕРЕКРЫТИЕ КНОПКИ)" data-en="SECURITY LOCK (CLICK BLOCK OVERLAP)">XAVFSIZLIK TO'SIG'I (BLOKIROVKA)</span>
+        </div>
+
+        <!-- Reactor Action Button with BUG 5 (NaN Logic Bug in script.js) -->
+        <div class="reactor-btn-wrap">
+          <button id="mine-btn" class="btn-reactor">
+            <span class="reactor-glow"></span>
+            <span class="reactor-core">⚡</span>
+            <span class="reactor-label" data-ru="СБОР ЭНЕРГИИ (+10)" data-en="HARVEST ENERGY (+10)">ENERGIYA TO'PLASH (+10)</span>
+          </button>
+        </div>
+
       </div>
     </section>
 
-    <!-- STATUS / STATS BAR -->
+    <!-- STATUS / STATS HUD -->
     <section id="stats" class="stats-grid">
-      <div class="stat-box">
-        <div class="stat-title" data-ru="Собранная Энергия" data-en="Harvested Energy">To'plangan Energiya</div>
-        <!-- BUG 4: Text color in dark mode fails contrast -->
-        <div id="energy-counter" class="stat-value">0 EP</div>
+      
+      <!-- STAT 1: Energy Counter with BUG 4 (Dark Mode Contrast Flaw) -->
+      <div class="stat-box bug-contrast-box">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-info">
+          <div class="stat-title" data-ru="Собранная Энергия" data-en="Harvested Energy">To'plangan Energiya</div>
+          <!-- BUG 4: Text color in dark mode is set to #0d1e38 (nearly black on black) -->
+          <div id="energy-counter" class="stat-value">0 EP</div>
+        </div>
       </div>
+
+      <!-- STAT 2: Purchased Items -->
       <div class="stat-box">
-        <div class="stat-title" data-ru="Купленные Артефакты" data-en="Purchased Artifacts">Xarid Qilingan Artifaktlar</div>
-        <div id="items-counter" class="stat-value">0 ta</div>
+        <div class="stat-icon">🎒</div>
+        <div class="stat-info">
+          <div class="stat-title" data-ru="Артефакты в инвентаре" data-en="Artifacts in Inventory">Xarid Qilingan Qurollar</div>
+          <div id="items-counter" class="stat-value neon-cyan">0 ta</div>
+        </div>
       </div>
+
+      <!-- STAT 3: Detective Rank -->
       <div class="stat-box">
-        <div class="stat-title" data-ru="Ранг Детектива" data-en="Detective Rank">Detektiv Darajasi</div>
-        <div class="stat-value" id="rank-badge" style="color:#0B6B4F;">RANK: NOVICE</div>
+        <div class="stat-icon">🎖️</div>
+        <div class="stat-info">
+          <div class="stat-title" data-ru="Ранг Детектива" data-en="Detective Rank">Detektiv Statusi</div>
+          <div class="stat-value neon-green">RANK: NOVICE</div>
+        </div>
       </div>
+
     </section>
 
     <!-- STORE SECTION -->
     <section id="store" class="store-section">
-      <h2 class="section-heading" data-ru="Кибер-Магазин // Артефакты" data-en="Cyber Store // Artifacts">Kiber-Do'kon // Artifaktlar</h2>
+      <div class="store-header">
+        <div>
+          <span class="sub-badge" data-ru="АРСЕНАЛ АРТЕФАКТОВ" data-en="ARTIFACT ARSENAL">QUROLLAR OMBORI</span>
+          <h2 class="section-heading" data-ru="Кибер-Магазин // Улучшения" data-en="Cyber Store // Upgrades">Kiber-Do'kon // Yangilanishlar</h2>
+        </div>
+        <div class="store-meta" data-ru="Доступно 3 артефакта" data-en="3 Artifacts Available">3 ta jihoz mavjud</div>
+      </div>
+
       <div class="cards-grid">
         
         <!-- CARD 1 -->
         <div class="card">
+          <div class="card-glow"></div>
           <div class="card-icon">🗡️</div>
           <h3 class="card-title" data-ru="Неоновая Катана" data-en="Neon Katana">Neon Katana</h3>
-          <p class="card-desc" data-ru="Легендарный лазерный клинок, удваивающий мощность каждого клика." data-en="Legendary laser blade doubling your energy yield on every click.">Har bir klik kuchini 2 barobar oshiruvchi afsonaviy lazer quroli.</p>
-          <div class="card-price">50 EP</div>
-          <button class="btn-buy" onclick="buyItem('katana', 50)" data-ru="Купить" data-en="Purchase">Xarid Qilish</button>
+          <p class="card-desc" data-ru="Легендарный лазерный клинок, удваивающий мощность каждого клика." data-en="Legendary laser blade doubling your energy yield on every click.">
+            Har bir klik quvvatini 2 barobar oshiruvchi afsonaviy lazer quroli.
+          </p>
+          <div class="card-footer">
+            <div class="card-price">50 EP</div>
+            <button class="btn-buy" onclick="buyItem('Neon Katana', 50)" data-ru="Xarid Qilish" data-en="Purchase">Xarid Qilish</button>
+          </div>
         </div>
 
-        <!-- CARD 2: BUG 3 - Fixed height with overflow:hidden chops off the button -->
+        <!-- CARD 2: BUG 3 (UI Overflow Cutoff - Fixed height: 180px and overflow: hidden slices off the button!) -->
         <div class="card card-broken-overflow">
+          <div class="card-glow"></div>
           <div class="card-icon">🛡️</div>
           <h3 class="card-title" data-ru="Квантовый Щит" data-en="Quantum Shield">Kvant Qalqoni</h3>
-          <p class="card-desc" data-ru="Нейронный силовой барьер, защищающий систему от сбоев и кибератак." data-en="Neural forcefield protecting systems against software crashes and cyberattacks.">Tizim xatoliklaridan va kiber-hujumlardan saqlovchi mustahkam neyron qalqon.</p>
-          <div class="card-price">120 EP</div>
-          <button class="btn-buy" onclick="buyItem('shield', 120)" data-ru="Купить" data-en="Purchase">Xarid Qilish</button>
+          <p class="card-desc" data-ru="Нейронный силовой барьер, защищающий систему от сбоев и кибератак." data-en="Neural forcefield protecting systems against software crashes and cyberattacks.">
+            Tizim xatoliklaridan va kiber-hujumlardan saqlovchi mustahkam neyron qalqon.
+          </p>
+          <div class="card-footer">
+            <div class="card-price">120 EP</div>
+            <button class="btn-buy" onclick="buyItem('Kvant Qalqoni', 120)" data-ru="Xarid Qilish" data-en="Purchase">Xarid Qilish</button>
+          </div>
         </div>
 
         <!-- CARD 3 -->
         <div class="card">
+          <div class="card-glow"></div>
           <div class="card-icon">🤖</div>
           <h3 class="card-title" data-ru="Автономный Дрон" data-en="Autonomous Drone">Avtonom Kiber-Dron</h3>
-          <p class="card-desc" data-ru="Автоматический помощник, вырабатывающий +20 энергии каждые 2 секунды." data-en="Autonomous assistant harvesting +20 energy every 2 seconds automatically.">Avtomatik ravishda har 2 soniyada +20 energiya ishlab beruvchi yordamchi.</p>
-          <div class="card-price">250 EP</div>
-          <button class="btn-buy" onclick="buyItem('drone', 250)" data-ru="Купить" data-en="Purchase">Xarid Qilish</button>
+          <p class="card-desc" data-ru="Автоматический помощник, вырабатывающий +20 энергии каждые 2 секунды." data-en="Autonomous assistant harvesting +20 energy every 2 seconds automatically.">
+            Avtomatik ravishda har 2 soniyada +20 energiya ishlab beruvchi yordamchi.
+          </p>
+          <div class="card-footer">
+            <div class="card-price">250 EP</div>
+            <button class="btn-buy" onclick="buyItem('Kiber-Dron', 250)" data-ru="Xarid Qilish" data-en="Purchase">Xarid Qilish</button>
+          </div>
         </div>
 
       </div>
     </section>
+
   </main>
 
+  <!-- FOOTER -->
   <footer class="footer">
-    <p data-ru="Target International School // 9-й Класс Vibecoding Debug Challenge" data-en="Target International School // Grade 9 Vibecoding Debug Challenge">Target International School // 9-Sinf Vibecoding Debug Challenge</p>
+    <div class="footer-inner">
+      <span>TARGET INTERNATIONAL SCHOOL // VIBECODING JUNIOR</span>
+      <span class="footer-dot">•</span>
+      <span data-ru="2-я неделя // Урок 12 // Кибер-Детектив" data-en="Week 2 // Lesson 12 // Cyber Detective">2-Hafta // 12-Dars // Kiber-Detektiv</span>
+    </div>
   </footer>
 
   <script src="script.js"></script>

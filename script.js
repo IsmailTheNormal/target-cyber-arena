@@ -1,6 +1,6 @@
 // TARGET CYBER ARENA // GAME LOGIC
 // ==========================================================
-// I18N MULTILINGUAL SYSTEM (UZ / RU / EN)
+// 1. I18N MULTILINGUAL SYSTEM (UZ / RU / EN)
 // ==========================================================
 let currentLang = 'uz';
 try { currentLang = localStorage.getItem('arena-lang') || 'uz'; } catch (e) {}
@@ -40,24 +40,6 @@ const itemsCounter = document.getElementById("items-counter");
 const mineBtn = document.getElementById("mine-btn");
 const themeBtn = document.getElementById("theme-btn");
 
-// ==========================================================
-// BUG 6 (Event & ID Mismatch):
-// HTML has id="sound-btn", but JS tries to select "audio-toggle".
-// This throws "Uncaught TypeError: Cannot read properties of null"
-// in DevTools Console, preventing sound setup!
-// Fix: change "audio-toggle" to "sound-btn".
-// ==========================================================
-const soundBtn = document.getElementById("audio-toggle");
-soundBtn.addEventListener("click", () => {
-  playCyberBeep();
-  const msg = {
-    uz: "Kiber-ovoz effektlari faollashtirildi! 🔊",
-    ru: "Кибер-звуковые эффекты активированы! 🔊",
-    en: "Cyber audio FX activated! 🔊"
-  };
-  alert(msg[currentLang] || msg.uz);
-});
-
 // Sound synthesizer using Web Audio API (no external files needed!)
 function playCyberBeep() {
   try {
@@ -83,11 +65,13 @@ function playCyberBeep() {
 // Using undefined clickBonus causes energyScore to become NaN!
 // Fix: energyScore += 10;
 // ==========================================================
-mineBtn.addEventListener("click", () => {
-  energyScore = energyScore + clickBonus + 10; // BUG: undefined variable produces NaN!
-  updateUI();
-  playCyberBeep();
-});
+if (mineBtn) {
+  mineBtn.addEventListener("click", () => {
+    energyScore = energyScore + clickBonus + 10; // BUG 5: undefined produces NaN!
+    updateUI();
+    playCyberBeep();
+  });
+}
 
 // ==========================================================
 // BUG 7 (Store Economy Bug):
@@ -96,7 +80,7 @@ mineBtn.addEventListener("click", () => {
 // ==========================================================
 function buyItem(itemName, price) {
   if (energyScore >= price) {
-    energyScore = energyScore + price; // BUG: Should be energyScore - price!
+    energyScore = energyScore + price; // BUG 7: Should be energyScore - price!
     itemsCount++;
     updateUI();
     playCyberBeep();
@@ -126,16 +110,36 @@ function updateUI() {
 }
 
 // THEME TOGGLE
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-theme");
-  const isDark = document.body.classList.contains("dark-theme");
-  const themeLabels = {
-    uz: isDark ? "☀️ Yorug'" : "🌙 Rejim",
-    ru: isDark ? "☀️ Светлая" : "🌙 Тема",
-    en: isDark ? "☀️ Light" : "🌙 Theme"
-  };
-  themeBtn.textContent = themeLabels[currentLang] || themeLabels.uz;
-});
+if (themeBtn) {
+  themeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-theme");
+    const isDark = document.body.classList.contains("dark-theme");
+    const themeLabels = {
+      uz: isDark ? "☀️ Yorug'" : "🌙 Rejim",
+      ru: isDark ? "☀️ Светлая" : "🌙 Тема",
+      en: isDark ? "☀️ Light" : "🌙 Theme"
+    };
+    themeBtn.textContent = themeLabels[currentLang] || themeLabels.uz;
+  });
+}
 
-// INITIALIZE
+// INITIALIZE UI
 updateUI();
+
+// ==========================================================
+// BUG 6 (Event & ID Mismatch):
+// HTML has id="sound-btn", but JS tries to select "audio-toggle".
+// This throws "Uncaught TypeError: Cannot read properties of null"
+// in DevTools Console on page load, and the sound button is dead!
+// Fix: change "audio-toggle" to "sound-btn".
+// ==========================================================
+const soundBtn = document.getElementById("audio-toggle");
+soundBtn.addEventListener("click", () => {
+  playCyberBeep();
+  const msg = {
+    uz: "Kiber-ovoz effektlari faollashtirildi! 🔊",
+    ru: "Кибер-звуковые эффекты активированы! 🔊",
+    en: "Cyber audio FX activated! 🔊"
+  };
+  alert(msg[currentLang] || msg.uz);
+});
